@@ -27,14 +27,18 @@ void read_proc_stat(Circular_buffer* circular_buffer)
     FILE* proc_stat_file = fopen("/proc/stat", "r");
     if(proc_stat_file == NULL)
     {
-        perror("ERROR: Failed to open file /proc/stat\n");
+        char* error = "ERROR: Failed to open file /proc/stat\n";
+        perror(error);
+        fprintf(logger_file, "%s", error);
         return;
     }
 
     char string[4];
     if(fscanf(proc_stat_file, "%s", string) != 1)
     {
-        perror("ERROR: fscanf() failed\n");
+        char* error = "ERROR: fscanf() failed\n";
+        perror(error);
+        fprintf(logger_file, "%s", error);
         return;
     }
 
@@ -52,7 +56,9 @@ void read_proc_stat(Circular_buffer* circular_buffer)
 
     if(result != number_of_proccesor_modes)
     {
-        perror("ERROR: fscanf() failed\n");
+        char* error = "ERROR: fscanf() failed\n";
+        perror(error);
+        fprintf(logger_file, "%s", error);
         return;
     }
 

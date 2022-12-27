@@ -5,8 +5,8 @@ CFLAGS = -Weverything -Wno-declaration-after-statement -Wno-padded
 
 OBJ  = output
 
-all: main.o circular_buffer.o reader.o analyzer.o printer.o test.o
-	$(CC) $(CFLAGS) main.o circular_buffer.o reader.o analyzer.o printer.o test.o -o $(OBJ)
+all: main.o circular_buffer.o reader.o analyzer.o printer.o logger.o test.o
+	$(CC) $(CFLAGS) main.o circular_buffer.o reader.o analyzer.o printer.o logger.o test.o -o $(OBJ)
 
 main.o: main.c circular_buffer.h
 	$(CC) $(CFLAGS) -c main.c
@@ -19,6 +19,9 @@ printer.o: printer.c printer.h circular_buffer.h utils.h
 
 analyzer.o: analyzer.c analyzer.h circular_buffer.h utils.h
 	$(CC) $(CFLAGS) -c analyzer.c
+
+logger.o: logger.c logger.h utils.h
+	$(CC) $(CFLAGS) -c logger.c
 
 circular_buffer.o: circular_buffer.c circular_buffer.h
 	$(CC) $(CFLAGS) -c circular_buffer.c

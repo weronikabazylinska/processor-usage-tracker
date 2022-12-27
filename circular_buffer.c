@@ -5,7 +5,9 @@ Circular_buffer* circular_buffer_init(void)
     Circular_buffer* circular_buffer = malloc(sizeof(Circular_buffer));
     if(circular_buffer == NULL)
     {
-        perror("ERROR: Failed to allocate memory for circular buffer\n");
+        char* error = "ERROR: Failed to allocate memory for circular buffer\n";
+        perror(error);
+        fprintf(logger_file, "%s", error);
         return circular_buffer;
     }
 

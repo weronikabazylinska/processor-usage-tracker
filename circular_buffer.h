@@ -7,6 +7,8 @@
 
 #define BUFF_SIZE 100
 
+extern FILE* logger_file;
+
 typedef struct Circular_buffer
 {
     unsigned int head_index, tail_index;
