@@ -2,6 +2,7 @@
 #include "analyzer.h"
 #include "printer.h"
 #include "logger.h"
+#include "watchdog.h"
 #include <string.h>
 
 extern FILE* logger_file;
@@ -12,6 +13,7 @@ typedef enum Threads
     analyzer,
     printer,
     logger,
+    watchdog,
     number_threads
 }Threads;
 
@@ -28,6 +30,7 @@ int main(void)
     thread_data.cpu_usage.circular_buffer = circular_buffer_processor_usage;
     thread_data.cpu_usage.are_sem_init = false;
     thread_data.data_logger.is_sem_init = false;
+    thread_data.flag_watchdog = reset_flag;
 
     pthread_t th[number_threads];
     if(pthread_create(&th[reader], NULL, reader_thread, &thread_data) != 0)
@@ -49,6 +52,11 @@ int main(void)
     {
          perror("Failed to create logger thread\n");
          return 4;
+    }
+    if(pthread_create(&th[watchdog], NULL, watchdog_thread, &thread_data) != 0)
+    {
+         perror("Failed to create logger thread\n");
+         return 5;
     }
 
     for(size_t i = reader; i < number_threads; ++i)

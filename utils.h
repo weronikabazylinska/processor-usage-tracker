@@ -2,8 +2,9 @@
 #define UTILS_H
 
 #include "circular_buffer.h"
-#include <stdbool.h>
 #include <semaphore.h>
+#include <stdatomic.h>
+#include <stdbool.h>
 
 extern FILE* logger_file;
 
@@ -26,6 +27,7 @@ typedef struct Thread_data
    Data cpu_data;
    Data cpu_usage;
    Data_logger data_logger;
+   atomic_uint flag_watchdog;
 } Thread_data;
 
 typedef enum Processor_mode
@@ -34,5 +36,16 @@ typedef enum Processor_mode
     user_mode, nice_mode, system_mode, irq_mode, softirq_mode, steal_mode,//non idle
     number_of_proccesor_modes
 } Processor_mode;
+
+typedef enum Flag_settings
+{
+    reset_flag = 0,
+    exec_reader = 1 << 0,
+    exec_analyzer = 1 << 1,
+    exec_printer = 1 << 2,
+    exec_logger = 1 << 3,
+    exec_all = exec_reader | exec_analyzer | exec_printer | exec_logger,
+    exec_stop = 1 << 4
+} Flag_settings;
 
 #endif // UTILS_H

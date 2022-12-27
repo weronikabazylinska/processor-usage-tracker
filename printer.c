@@ -13,15 +13,20 @@ void* printer_thread(void* thread_data)
         sleep(1);
     }
 
-    while(1)
+    while((t_data->flag_watchdog != exec_stop))
     {
         sem_wait(&t_data->cpu_usage.sem_full);
         t_data->data_logger.processor_usage = circular_buffer_pop(t_data->cpu_usage.circular_buffer);
         pthread_cond_signal(&t_data->cpu_usage.circular_buffer->cond_buffer_is_full);
         system("clear");
-        printf("CPU usage: %.2lf\n", t_data->data_logger.processor_usage);
+        printf("pid(%d)\nCPU usage: %.2lf\n", getpid(), t_data->data_logger.processor_usage);
         sem_post(&t_data->data_logger.sem);
         sem_post(&t_data->cpu_usage.sem_empty);
+
+        if(t_data->flag_watchdog != exec_stop)
+        {
+            t_data->flag_watchdog |= exec_printer;
+        }
     }
 
     if(t_data->cpu_usage.are_sem_init == true)

@@ -16,16 +16,20 @@ void* logger_thread(void* thread_data)
         char* error = "Failed to open file /proc/stat\n";
         perror(error);
         fprintf(logger_file, "%s", error);
-        return thread_data;
     }
 
     unsigned int seconds_counter = 1;
     fprintf(logger_file,"second\t CPU usage\n");
 
-    while(1)
+    while((t_data->flag_watchdog != exec_stop))
     {
         sem_wait(&t_data->data_logger.sem);
         fprintf(logger_file,"%6u\t %8.2f%%\n", seconds_counter++, t_data->data_logger.processor_usage);
+
+        if(t_data->flag_watchdog != exec_stop)
+        {
+            t_data->flag_watchdog |= exec_logger;
+        }
     }
 
     if(t_data->data_logger.is_sem_init == true)
@@ -36,3 +40,4 @@ void* logger_thread(void* thread_data)
     fclose(logger_file);
     return thread_data;
 }
+

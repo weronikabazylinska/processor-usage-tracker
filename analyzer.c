@@ -18,7 +18,7 @@ void* analyzer_thread(void* thread_data)
     Components_processed_data previous = calculate_components_proccesed_data(t_data->cpu_data.circular_buffer);
     Components_processed_data current;
 
-    while(1)
+    while((t_data->flag_watchdog != exec_stop))
     {
         sem_wait(&t_data->cpu_data.sem_full);
         current = calculate_components_proccesed_data(t_data->cpu_data.circular_buffer);
@@ -30,6 +30,11 @@ void* analyzer_thread(void* thread_data)
         circular_buffer_push(t_data->cpu_usage.circular_buffer, processed_data);
         pthread_cond_signal(&t_data->cpu_usage.circular_buffer->cond_buffer_is_empty);
         sem_post(&t_data->cpu_usage.sem_full);
+
+        if(t_data->flag_watchdog != exec_stop)
+        {
+            t_data->flag_watchdog |= exec_analyzer;
+        }
     }
 
     if(t_data->cpu_data.are_sem_init == true)

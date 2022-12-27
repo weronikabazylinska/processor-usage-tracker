@@ -10,13 +10,18 @@ void* reader_thread(void* thread_data)
         t_data->cpu_data.are_sem_init= true;
     }
 
-    while(1)
+    while((t_data->flag_watchdog != exec_stop))
     {
         sem_wait(&t_data->cpu_data.sem_empty);
         sleep(1);
         read_proc_stat(t_data->cpu_data.circular_buffer);
         pthread_cond_signal(&t_data->cpu_data.circular_buffer->cond_buffer_is_empty);
         sem_post(&t_data->cpu_data.sem_full);
+
+        if(t_data->flag_watchdog != exec_stop)
+        {
+            t_data->flag_watchdog |= exec_reader;
+        }
     }
 
     return thread_data;
