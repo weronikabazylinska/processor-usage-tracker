@@ -1,7 +1,7 @@
-CC = gcc
-#CC = clang
-CFLAGS = -Wpedantic -Wextra -Wall
-#CFLAGS = -Weverything -Wno-declaration-after-statement -Wno-padded -Wno-atomic-implicit-seq-cst
+#CC = gcc
+CC = clang
+#CFLAGS = -Wpedantic -Wextra -Wall
+CFLAGS = -Weverything -Wno-declaration-after-statement -Wno-padded -Wno-atomic-implicit-seq-cst -Wno-disabled-macro-expansion
 
 OBJ  = output
 

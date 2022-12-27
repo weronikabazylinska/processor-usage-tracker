@@ -5,7 +5,7 @@ void* reader_thread(void* thread_data)
     Thread_data* t_data = (Thread_data*)thread_data;
     if(t_data->cpu_data.are_sem_init == false)
     {
-        sem_init(&t_data->cpu_data.sem_empty, 0, BUFF_SIZE);
+        sem_init(&t_data->cpu_data.sem_empty, 0, (BUFF_SIZE / number_of_proccesor_modes));
         sem_init(&t_data->cpu_data.sem_full, 0, 0);
         t_data->cpu_data.are_sem_init = true;
     }
