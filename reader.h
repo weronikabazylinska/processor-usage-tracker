@@ -6,7 +6,7 @@
 #include <unistd.h>
 
 
-void* reader_thread(void* circular_buffer);
+void* reader_thread(void* thread_data);
 void read_proc_stat(Circular_buffer* circular_buffer);
 
 #endif // READER_H

@@ -1,16 +1,25 @@
 #include "reader.h"
 
-void* reader_thread(void* circular_buffer)
+void* reader_thread(void* thread_data)
 {
-    Circular_buffer* cb = (Circular_buffer*)circular_buffer;
+    Thread_data* t_data = (Thread_data*)thread_data;
+    if(t_data->cpu_data.are_sem_init == false)
+    {
+        sem_init(&t_data->cpu_data.sem_empty, 0, BUFF_SIZE);
+        sem_init(&t_data->cpu_data.sem_full, 0, 0);
+        t_data->cpu_data.are_sem_init= true;
+    }
 
     while(1)
     {
+        sem_wait(&t_data->cpu_data.sem_empty);
         sleep(1);
-        read_proc_stat(cb);
+        read_proc_stat(t_data->cpu_data.circular_buffer);
+        pthread_cond_signal(&t_data->cpu_data.circular_buffer->cond_buffer_is_empty);
+        sem_post(&t_data->cpu_data.sem_full);
     }
 
-    return circular_buffer;
+    return thread_data;
 }
 
 void read_proc_stat(Circular_buffer* circular_buffer)
