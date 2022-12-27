@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
-#include <stdbool.h>
 
 extern FILE* logger_file;
 
@@ -19,9 +18,7 @@ typedef struct Circular_buffer
 } Circular_buffer;
 
 Circular_buffer* circular_buffer_init(const size_t buffer_size);
-bool is_circular_buffer_full(const Circular_buffer* circular_buffer);
 void circular_buffer_push(Circular_buffer* circular_buffer, const double processor_data);
-bool is_circular_buffer_empty(const Circular_buffer* circular_buffer);
 double circular_buffer_pop(Circular_buffer* circular_buffer);
 void circular_buffer_destroy(Circular_buffer* circular_buffer);
 

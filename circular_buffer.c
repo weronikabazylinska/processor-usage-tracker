@@ -23,22 +23,6 @@ Circular_buffer* circular_buffer_init(const size_t buffer_size)
     return circular_buffer;
 }
 
-bool is_circular_buffer_full(const Circular_buffer* circular_buffer)
-{
-    if(circular_buffer == NULL)
-    {
-        char* error = "ERROR: Pointer to circular buffer is NULL\n";
-        perror(error);
-        fprintf(logger_file, "%s", error);
-        return 1;
-    }
-    if(circular_buffer->current_number_of_elements == circular_buffer->capacity)
-    {
-        return true;
-    }
-    return false;
-}
-
 void circular_buffer_push(Circular_buffer* circular_buffer, const double processor_data)
 {
     if(circular_buffer == NULL)
@@ -50,7 +34,7 @@ void circular_buffer_push(Circular_buffer* circular_buffer, const double process
     }
 
     pthread_mutex_lock(&circular_buffer->mutex_circular_buffer);
-    while(is_circular_buffer_full(circular_buffer))
+    while(circular_buffer->current_number_of_elements == circular_buffer->capacity)
     {
         pthread_cond_wait(&circular_buffer->cond_buffer_is_full, &circular_buffer->mutex_circular_buffer);
     }
@@ -61,22 +45,6 @@ void circular_buffer_push(Circular_buffer* circular_buffer, const double process
     pthread_mutex_unlock(&circular_buffer->mutex_circular_buffer);
 }
 
-bool is_circular_buffer_empty(const Circular_buffer* circular_buffer)
-{
-     if(circular_buffer == NULL)
-    {
-        char* error = "ERROR: Pointer to circular buffer is NULL\n";
-        perror(error);
-        fprintf(logger_file, "%s", error);
-        return 1;
-    }
-    if(circular_buffer->current_number_of_elements == 0)
-    {
-        return true;
-    }
-    return false;
-}
-
 double circular_buffer_pop(Circular_buffer* circular_buffer)
 {
     if(circular_buffer == NULL)
@@ -84,11 +52,11 @@ double circular_buffer_pop(Circular_buffer* circular_buffer)
         char* error = "ERROR: Pointer to circular buffer is NULL\n";
         perror(error);
         fprintf(logger_file, "%s", error);
-        return 1;
+        return 0;
     }
 
     pthread_mutex_lock(&circular_buffer->mutex_circular_buffer);
-    while(is_circular_buffer_empty(circular_buffer))
+    while(circular_buffer->current_number_of_elements == 0)
     {
         pthread_cond_wait(&circular_buffer->cond_buffer_is_empty, &circular_buffer->mutex_circular_buffer);
     }

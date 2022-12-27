@@ -39,6 +39,8 @@ void* logger_thread(void* thread_data)
         sem_destroy(&t_data->data_logger.sem);
         t_data->data_logger.is_sem_init = false;
     }
+
     fclose(logger_file);
+
     return thread_data;
 }

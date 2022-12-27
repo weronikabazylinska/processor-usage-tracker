@@ -7,7 +7,7 @@ void* reader_thread(void* thread_data)
     {
         sem_init(&t_data->cpu_data.sem_empty, 0, BUFF_SIZE);
         sem_init(&t_data->cpu_data.sem_full, 0, 0);
-        t_data->cpu_data.are_sem_init= true;
+        t_data->cpu_data.are_sem_init = true;
     }
 
     while((t_data->flag_watchdog != exec_stop) && (!done))

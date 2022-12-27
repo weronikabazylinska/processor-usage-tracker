@@ -4,7 +4,7 @@ void* watchdog_thread(void* thread_data)
 {
     Thread_data* t_data = (Thread_data*)thread_data;
 
-    while((t_data->flag_watchdog != exec_stop)&& (!done))
+    while((t_data->flag_watchdog != exec_stop) && (!done))
     {
         t_data->flag_watchdog = reset_flag;
         sleep(2);
