@@ -10,7 +10,7 @@ void* reader_thread(void* thread_data)
         t_data->cpu_data.are_sem_init= true;
     }
 
-    while((t_data->flag_watchdog != exec_stop))
+    while((t_data->flag_watchdog != exec_stop) && (!done))
     {
         sem_wait(&t_data->cpu_data.sem_empty);
         sleep(1);

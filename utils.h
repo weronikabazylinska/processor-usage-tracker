@@ -5,8 +5,10 @@
 #include <semaphore.h>
 #include <stdatomic.h>
 #include <stdbool.h>
+#include <signal.h>
 
 extern FILE* logger_file;
+extern volatile sig_atomic_t done;
 
 typedef struct Data
 {

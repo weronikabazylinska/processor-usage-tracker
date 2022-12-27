@@ -15,5 +15,4 @@ void* analyzer_thread(void* arg);
 Components_processed_data calculate_components_proccesed_data(Circular_buffer* circular_buffer);
 double calculate_proccesed_data(Components_processed_data* previous, Components_processed_data* current);
 
-
 #endif // ANALYZER_H

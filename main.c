@@ -17,12 +17,27 @@ typedef enum Threads
     number_threads
 }Threads;
 
+volatile sig_atomic_t done = 0;
+static void term(int signum)
+{
+    if(signum == 15)
+    {
+        done = 1;
+        fprintf(logger_file, "%s", "SINGTERM caught\n");
+    }
+}
+
 int main(void)
 {
     Circular_buffer* circular_buffer_processor_data = circular_buffer_init();
     Circular_buffer* circular_buffer_processor_usage = circular_buffer_init();
 
     read_proc_stat(circular_buffer_processor_data);
+
+    struct sigaction action;
+    memset(&action, 0, sizeof(struct sigaction));
+    action.sa_handler = term;
+    sigaction(SIGTERM, &action, NULL);
 
     Thread_data thread_data;
     thread_data.cpu_data.circular_buffer = circular_buffer_processor_data;
