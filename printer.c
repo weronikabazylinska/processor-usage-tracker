@@ -13,7 +13,7 @@ void* printer_thread(void* thread_data)
         sleep(1);
     }
 
-    while((t_data->flag_watchdog != exec_stop)&& (!done))
+    while((t_data->flag_watchdog != exec_stop) && (!done))
     {
         sem_wait(&t_data->cpu_usage.sem_full);
         t_data->data_logger.processor_usage = circular_buffer_pop(t_data->cpu_usage.circular_buffer);

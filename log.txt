@@ -124,3 +124,66 @@ second	 CPU usage
    105	     4.73%
 SINGTERM caught
    106	     4.75%
+second	 CPU usage
+thread - logger wasn't executed during last two second
+     1	     7.87%
+second	 CPU usage
+thread - analyzer wasn't executed during last two second
+thread - printer wasn't executed during last two second
+thread - logger wasn't executed during last two second
+     1	     3.55%
+second	 CPU usage
+thread - analyzer wasn't executed during last two second
+thread - printer wasn't executed during last two second
+thread - logger wasn't executed during last two second
+     1	     5.08%
+second	 CPU usage
+     1	     5.58%
+     2	     8.40%
+     3	     8.50%
+     4	     8.92%
+     5	     8.50%
+     6	     9.03%
+     7	     8.98%
+     8	     8.95%
+     9	     9.76%
+    10	     9.25%
+    11	     8.88%
+    12	     9.03%
+    13	     8.93%
+SINGTERM caught
+    14	     9.02%
+second	 CPU usage
+     1	    10.92%
+     2	    11.01%
+     3	    11.24%
+     4	     9.66%
+     5	     9.77%
+     6	     9.69%
+     7	    10.25%
+     8	     9.68%
+     9	     9.63%
+    10	     9.69%
+    11	     9.57%
+    12	     9.63%
+    13	     9.79%
+    14	    10.10%
+SINGTERM caught
+    15	     9.97%
+second	 CPU usage
+     1	    10.31%
+     2	    10.48%
+     3	     9.92%
+     4	     9.36%
+     5	     9.33%
+     6	     9.29%
+     7	     9.56%
+     8	     9.51%
+     9	     9.41%
+    10	     9.34%
+    11	     9.56%
+    12	    10.36%
+    13	    10.46%
+    14	    10.62%
+SINGTERM caught
+    15	    10.55%

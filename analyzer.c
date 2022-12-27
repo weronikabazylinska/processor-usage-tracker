@@ -18,7 +18,7 @@ void* analyzer_thread(void* thread_data)
     Components_processed_data previous = calculate_components_proccesed_data(t_data->cpu_data.circular_buffer);
     Components_processed_data current;
 
-    while((t_data->flag_watchdog != exec_stop)&& (!done))
+    while((t_data->flag_watchdog != exec_stop) && (!done))
     {
         sem_wait(&t_data->cpu_data.sem_full);
         current = calculate_components_proccesed_data(t_data->cpu_data.circular_buffer);

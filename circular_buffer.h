@@ -4,23 +4,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
-
-#define BUFF_SIZE 100
+#include <stdbool.h>
 
 extern FILE* logger_file;
 
 typedef struct Circular_buffer
 {
     unsigned int head_index, tail_index;
-    size_t current_number_of_elements;
-    double buffer[BUFF_SIZE];
+    size_t current_number_of_elements, capacity;
     pthread_mutex_t mutex_circular_buffer;
     pthread_cond_t cond_buffer_is_empty;
     pthread_cond_t cond_buffer_is_full;
+    double buffer[];
 } Circular_buffer;
 
-Circular_buffer* circular_buffer_init(void);
+Circular_buffer* circular_buffer_init(const size_t buffer_size);
+bool is_circular_buffer_full(const Circular_buffer* circular_buffer);
 void circular_buffer_push(Circular_buffer* circular_buffer, const double processor_data);
+bool is_circular_buffer_empty(const Circular_buffer* circular_buffer);
 double circular_buffer_pop(Circular_buffer* circular_buffer);
 void circular_buffer_destroy(Circular_buffer* circular_buffer);
 

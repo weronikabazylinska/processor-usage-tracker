@@ -4,12 +4,12 @@
 
 void test_circular_buffer_init(void)
 {
-    assert(circular_buffer_init() != NULL);
+    assert(circular_buffer_init(DATA_SIZE) != NULL);
 }
 
 void test_circular_buffer_push_and_pop(void)
 {
-    Circular_buffer* circular_buffer = circular_buffer_init();
+    Circular_buffer* circular_buffer = circular_buffer_init(DATA_SIZE);
 
     double source_data[DATA_SIZE] = {0.0, 1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7, 8.8, 9.9};
 

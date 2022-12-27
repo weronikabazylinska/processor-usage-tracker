@@ -29,8 +29,8 @@ static void term(int signum)
 
 int main(void)
 {
-    Circular_buffer* circular_buffer_processor_data = circular_buffer_init();
-    Circular_buffer* circular_buffer_processor_usage = circular_buffer_init();
+    Circular_buffer* circular_buffer_processor_data = circular_buffer_init(BUFF_SIZE);
+    Circular_buffer* circular_buffer_processor_usage = circular_buffer_init(BUFF_SIZE);
 
     read_proc_stat(circular_buffer_processor_data);
 

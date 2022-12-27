@@ -7,6 +7,8 @@
 #include <stdbool.h>
 #include <signal.h>
 
+#define BUFF_SIZE 100
+
 extern FILE* logger_file;
 extern volatile sig_atomic_t done;
 
